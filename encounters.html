@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
+</head>
+<body>
+
+<h1>Encounters</h1>
+<p id="output">Loading...</p>
+
+</body>
+
+<script>
+// get the patient id out of the HTML querystring
+let searchParams = new URLSearchParams(window.location.search);
+let patientId = searchParams.get('patient');        
+
+// only uncomment the line below for testing purposes
+//patientId = "87a339d0-8cae-418e-89c7-8651e6aab3c6";
+
+const client = new FHIR.client("https://r4.smarthealthit.org");
+
+// now query the FHIR server for the Encounter data
+client.request(`Encounter?patient=${patientId}`, { pageLimit: 0, flat: true }).then(function (encounterList) {
+
+    let outputBox = document.getElementById("output");
+    let encounterTable = document.createElement("table");   // creates a new table to display the encounters
+    outputBox.innerText = "";   // get rid of the "Loading..." text
+    outputBox.appendChild(encounterTable);
+
+    // loop over each enounter and add it as a row to the table
+    encounterList.forEach(function(encounter) {
+        let row = encounterTable.insertRow();
+        let cellA = row.insertCell();
+        let cellB = row.insertCell();
+        let cellC = row.insertCell();
+        cellA.innerText = encounter.id;
+        cellB.innerText = encounter.period.start;
+        cellC.innerText = encounter.type[0].text;
+    });
+});
+</script>
+
+
+</html> 

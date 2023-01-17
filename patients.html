@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
+    </head>
+<body>
+
+<h1>Patients</h1>
+<div id="output" style="height: 450px">Loading...</div>
+
+</body>
+
+<script>
+        
+    const client = new FHIR.client("https://r4.smarthealthit.org");
+    
+    // query the FHIR server for list of all Patients
+    client.request("Patient", { pageLimit: 0, flat: true }).then(function (patientList) {
+    
+        let outputBox = document.getElementById("output");
+        let patientTable = document.createElement("table");
+        
+        outputBox.innerText = "";
+        outputBox.appendChild(patientTable);
+        
+        // loop over all the patients and insert them into the table
+        patientList.forEach(function(patient) {
+            let row = patientTable.insertRow();
+            row.onclick = () => window.location = 'encounters.html?patient=' + patient.id
+            let cellA = row.insertCell();
+            let cellB = row.insertCell();
+            let cellC = row.insertCell();
+            cellA.innerText = patient.id;
+            cellB.innerText = patient.name[0].family;
+            cellC.innerText = patient.birthDate;
+        });
+    });
+    </script>
+
+</html> 
