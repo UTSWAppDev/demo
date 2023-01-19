@@ -1,0 +1,42 @@
+table {
+    border-collapse: collapse;
+    width: 50%;
+}
+td, th {
+    border: 1px solid cornsilk;
+    text-align: left;
+    padding: 8px;
+}
+tr:nth-child(even) {
+    background-color: aqua;
+}
+h1 {
+    background-color: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    border-style: solid;
+    border-color: white;
+}
+h2 {
+    background-color: lightcoral;
+    color: blue;
+    text-align: center;
+}
+.largecontent {
+    font-size: larger;
+}
+.smallcontent {
+    font-size: medium;
+}
+.column {
+    float: left;
+    width: 50%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.row:after {
+    content: "";
+    clear: both;
+    display: table;
+}
