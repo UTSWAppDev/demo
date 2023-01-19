@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
-    <head>
+  <head>
+    <title>Patient List</title>
     <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
-    </head>
-<body>
+    <link rel="stylesheet" href="demostyle.css">
+  </head>
+  <body>
 
-<h1>Patients</h1>
-<div id="output" style="height: 450px">Loading...</div>
+  <h1>Patients</h1>
+  <div id="output">Loading...</div>
 
-</body>
+  </body>
 
-<script>
+  <script>
         
     const client = new FHIR.client("https://r4.smarthealthit.org");
     
@@ -19,6 +21,7 @@
     
         let outputBox = document.getElementById("output");
         let patientTable = document.createElement("table");
+
         
         outputBox.innerText = "";
         outputBox.appendChild(patientTable);
@@ -35,6 +38,6 @@
             cellC.innerText = patient.birthDate;
         });
     });
-    </script>
+  </script>
 
 </html> 
