@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title>Testing JavaScript</title>     
+    </head>
+    <body>
+        <div id="div1">Hello World!</div>
+        <div>
+            <input type="button" value="Smile" onclick="document.getElementById('imgEmoji').src = 'smile.jpg';">
+            <img id="imgEmoji" width="100px" height="100px" src="smile.jpg">
+            <input type="button" value="Frown" onclick="Frown()">
+        </div>
+        <div id="divToAddStuffTo">
+        </div>
+        <p>
+            <input id="txtToAdd" type="text"/>
+            <input type="button" value="Add new <p>" onclick="AddP()"/>
+            <input type="button" value="Remove <p>" onclick="RemoveP()"/>
+        </p>
+    
+        <script>
+            // modify html
+            document.getElementById("div1").innerHTML = "Shhh!";
+
+            // modify style info
+            document.getElementById("div1").style.color = "blue"
+
+            // demo function and demo attribute change
+            // look up above at the frown button, which calls this function in its onclick
+            function Frown() {
+                document.getElementById("imgEmoji").src = "frown.png";
+            }
+
+            // demo function with parameters
+            function AddAndAlert (x, y) {
+                let sum = x + y;    // notice that JavaScript allows us to perform math operations (+, -, /, *)
+                alert("The sum of " + x + " and " + y + " is " + sum);
+            }
+            AddAndAlert(2, 3);  // this calls the AddAndAlert function, passing 2 and 3 as parameters
+            AddAndAlert(10, 12);
+
+            // demo adding new HTML elements
+            // look above at the "Add new <p>" button, which calls this function in its onclick
+            function AddP() {
+                let content = document.getElementById("txtToAdd").value;    // this gets the value entered by the user in the input textbox
+                let workingDiv = document.getElementById("divToAddStuffTo");    // this gets a "link" to the div we want to add content to
+                let newP = document.createElement("p"); // this creates a new <p> element for us to work on
+                newP.innerHTML = content;   // this sets the content inside the new <p> that we just created
+                workingDiv.appendChild(newP);   // this dynamically adds that content to the workingDiv object, which, remember, we set earlier
+            }
+
+            // remove <p>
+            function RemoveP() {
+                let workingDiv = document.getElementById("divToAddStuffTo");
+                workingDiv.removeChild(workingDiv.lastChild);
+            }
+        </script>
+    </body>
+</html>

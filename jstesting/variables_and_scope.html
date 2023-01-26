@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title>Testing JavaScript Scope</title>     
+    </head>
+    <body>
+    
+        <script>
+            // demonstrate scope
+            // let x = 1;
+            function TestScope() {
+                let x = 1;
+                alert("Here is x inside TestScope: " + x);
+            }
+            TestScope();
+
+            // the next line fails because x is defined inside of a block and not accessible here
+            //alert("Here is x outside of TestScope: " + x); 
+
+            // demonstrate dynamic typing
+            let x = 5;  // so far, x is a number
+            console.log(x); // shows 5
+            console.log(4 + x); // numeric addition. 4 + 5 = 9
+            console.log("4" + x);   // shows 45. JavaScript treated x as a string here because
+                                    // we told it to add it to a another string.
+                                    // 4 is a number. "4" is a string
+            x = "cat";  // now x is a string
+            console.log(x);
+
+            // demonstrate arrays
+            x = ["Apple", "Banana", "Orange"];  // now x is an array 
+            console.log(x[2]);    // x[ ] lets us access elements of the array. x[0] is the beginning
+            
+            // demonstrate objects
+            x = {firstName: "Mickey", lastName: "Mouse", homeTown: "Orlando"};  // now x is an object
+            console.log(x.homeTown);    // access "properties" of objects by using .property
+            
+            // nested objects
+            let objName = {first:"Donald", last:"Duck"};    // create an object for just the name
+            x = {name: objName, age: 65, homeTown:"Orlando"}; // objects can be nested
+            console.log(x.name.first);  // nested object property retrieval
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title>Testing JavaScript Events</title>     
+    </head>
+    <body>
+        <div>
+            <h1 id="theheader" onclick="AddStatus('Clicked')" onmouseenter="AddStatus('Mouse in')"
+            onmouseleave="AddStatus('Mouse out')">
+                Click on this big header!
+            </h1>
+            <div id="divStatusBox">
+
+            </div>
+        </div>
+    
+        <script>
+                function AddStatus(txtToAdd) {
+                    let statusBox = document.getElementById("divStatusBox");
+                    let pNew = document.createElement("p");
+                    pNew.innerHTML = txtToAdd;
+                    statusBox.appendChild(pNew);
+            }
+         </script>
+    </body>
+</html>

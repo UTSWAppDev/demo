@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title>Testing JavaScript Conditionals</title>     
+    </head>
+    <body>
+        <p>
+            <input id="txtName" type="text" value=""/>
+            <input type="button" value="Greeting" onclick="Greet()"/>
+        </p>
+    
+        <script>
+            function Greet() {
+                let name = document.getElementById("txtName").value;
+                if (name == "") {   // checks to see if the input box is empty
+                    alert("Please enter your name");
+                }
+                else if (name == "Jonathan") {  // it's me!
+                    alert("Hiya, boss!");
+                } else {
+                    alert("Greetings, " + name);
+                }
+            }
+            
+             </script>
+    </body>
+</html>
