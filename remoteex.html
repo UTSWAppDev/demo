@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>git Remote Exercise</title>
+        <meta charset="UTF-8">
+    </head>
+    <body style="font-family:'Courier New', Courier, monospace;">
+        <h2 style="background-color:lightgray;">Remote Exercise</h2>
+        <div style="border-style: solid; width: 300px; padding: 10px; margin: 10px 0px 10px 0px;">
+            <div style="font-family:Arial, Helvetica, sans-serif; font-size: medium;">
+                Which is your team?
+                <select id="ddTeam" onchange="ChangeTeam(this.value)">
+                    <option value="YourTeamName" selected>Select Your Team</option>
+                    <option value="AgileRevengers">Agile Revengers</option>
+                    <option value="ONYX">ONYX</option>
+                    <option value="ScrumAtMeBro">Scrum At Me Bro!</option>
+                    <option value="Sprinters">Sprinters</option>
+                </select>
+            </div>
+        </div>
+        <div style="border-style: solid; width: 100%;">
+            <p>// Clone your team's repository</p>
+            : git clone https://github.com/UTSWAppDev/<span class="txtTeam"><i>YourTeamName</i></span><br>
+            : cd <span class="txtTeam"><i>YourTeamName</i></span><br><br>
+            // Now you'll need to coordinate the next steps with your teammates. Have one team member modify the index.html<br>
+            // in her local directory. After making a modification, that team member will need to commit the change to her<br>
+            // local main branch.<br><br>
+            : git commit -am "<i>Description of your modification here</i>"<br><br>
+            // Now that team member's main branch needs to be pushed to the remote.<br><br>
+            : git push origin main<br><br>
+            // Now check index.html in your GitHub to verify that the changes have been uploaded to the shared repository<br><br>
+            // Now have another team member modify his local branch as well. Modify index.html in another way. Perhaps<br>
+            // change some style information about bg colors or text colors. Then have that team member commit the changes<br>
+            // to his local branch.<br><br>
+            : git commit -am "<i>Description of your modification here</i>"<br><br>
+            // Now that team member should attempt to push the changes to the remote.<br><br>
+            : git push origin main<br><br>
+            // Note that this will fail due to the remote branch now having updates that the pushing user does not have.<br>
+            // The solution is to <b>fetch</b> the remote branch's new commit data and then merge this with the commit you<br>
+            // are attempting to push.<br><br>
+            : git fetch origin<br><br>
+            // Now your remote tracking branch "origin/main" reflects the commit made by the first team member. You can now<br>
+            // merge "origin/main" into your local main as if it were a local branch. Remember the syntax for merging:<br><br>
+            : git merge origin/main<br><br>
+            // Resolve conflicts, if there are any. Once the merge is complete, then this team member can finally push his<br>
+            // local branch to the remote.<br><br>
+            : git push origin main<br><br>
+            
+        </div>
+        <script>
+            function ChangeTeam(txtTeam) {
+                let spansToFix = document.getElementsByClassName("txtTeam");
+                for (x in spansToFix) {
+                    spansToFix[x].innerHTML = txtTeam;
+                }
+            }
+        </script>
+    </body>
+</html>

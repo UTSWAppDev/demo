@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>git Branching Exercise</title>
+        <meta charset="UTF-8">
+    </head>
+    <body style="font-family:'Courier New', Courier, monospace;">
+        <h2 style="background-color:lightgray;">Branching Exercise</h2>
+        <div style="border-style: solid; width: 100%;">
+            <p>// Create a new folder to use as your git repository and initialize it</p>
+            : mkdir <i>RepoFolder</i><br>
+            : cd <i>RepoFolder</i><br>
+            : git init<br><br>
+            // Now create a new file in the repository<br>
+            // You can use vim, notepadd++, or whatever editor you'd like to create a file named 'testbranch.html'<br>
+            // Add some basic HTML to the file:<br><br>
+            <div style="padding-left: 15px;">
+            <textarea cols="50" rows="17">
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>git Branching Exercise</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; }
+    </style>
+</head>
+<body>
+    <h1 style="background-color:grey;">Testing git Branching</h1>
+    <!-- Add some more stuff here-->
+</body>
+</html>
+            </textarea>
+            </div>
+            <p>// Stage and commit the file to your repository</p>
+            : git add testbranch.html<br>
+            : git commit -m "First add of testbranch.html"<br><br>
+            // Now let's start work on a big new feature<br>
+            // We want to leave the current version of the repo untouched so that our new changes don't break anything<br>
+            // 'Branching' is how we accomplish this<br><br>
+            : git branch newfeature<br>
+            : git switch newfeature<br>
+            // By the way, the command 'git switch -c newfeature' does the same thing as the last two lines, only in one line<br><br>
+            <p>// Now start making some edits to testbranch.html. Maybe add a table, or just simple text. Whatever you like<br>
+            // Again, use notepad++, VS Code, brackets, whatever you like to edit files</p>
+            // Uh-oh! You just got a request for an urgent bug fix.<br>
+            // The customer wants the h1 element to have a green background instead of grey<br>
+            // You aren't ready to commit your <i>newfeature</i> changes yet, but you need to quickly fix the customer request<br>
+            // The solution here is to create another new branch for this urgent bug fix<br><br>
+            // First, change back to the main branch, because we want to create the bugfix branch off the main branch, not off of<br>
+            // the <i>newfeature</i> branch. But before we can do that, we must either <b>commit</b> or <b>stash</b> our changes<br><br>
+            // If you are happy with the status of your changes right now, you could <b>commit</b> them to the newfeature branch.<br>
+            // But if your code is still sloppy and not ready for a commit, you can stash it away and come back to it<br><br>
+            : git stash<br><br>
+            // This step is important, because when you change branches, your files in your working directory get replaced with their<br>
+            // versions from the branch you are switching to. So if you have uncommitted and un-stashed changes, they will be lost<br>
+            // when you <b>switch</b>.<br><br>
+            // Now that our changes are stashed, we can switch back to the main to continue work on the bugfix<br><br> 
+            : git switch main<br><br>
+            // While we're here, take a look at your testbranch.html file. By switching branches, git automatically replaced<br>
+            // the file with the one from the main branch. It now looks like it did before you started editing it in <i>newfeature</i><br><br>
+            // Now create another branch, this time called 'bugfix'. We'll use the more concise version<br>
+            // this time to create the branch and switch to it<br><br>
+            : git switch -c bugfix<br><br>
+            // Now again in your editor, fix the background-color style attribute. Change it from grey to green<br><br>
+            // Now that you've fixed the bug, you can commit this change to the current repository (bugfix)<br><br>
+            : git add testbranch.html<br>
+            : git commit -m "Fixed the header background color bug"<br><br>
+            // But this fix only exists in the <i>bugfix</i> branch. We need to get it back into the production branch aka 'main'<br>
+            // To do this, we need to <b>merge</b> the bugfix branch with the main branch. This requires us to first switch<br>
+            // to the main branch, and then tell git to merge main with bugfix<br><br>
+            : git switch main<br>
+            : git merge bugfix<br><br>
+            // Take note of the use of 'Fast-forward' in the output. Fast-forward merges are ones where the commit to be merged<br>
+            // is a direct descendant of the current commit of the branch to merge into. In this case, there were no other changes<br>
+            // made to the main branch between the time we split bugfix off and the time that we merged it back. Fast-forward<br>
+            // merges don't require any manual merging input from the user<br><br>
+            // Now that we've completed the work on the urgent bug fix request, we can remove that branch like so:<br><br>
+            : git branch -d bugfix<br><br>
+            // Now let's get back to work on our <i>newfeature</i> branch. Switch back to it.<br><br>
+            : git switch newfeature<br><br>
+            // If you committed your <i>newfeature</i> changes before you left this branch earlier, then they will automatically<br>
+            // be restored to your working directory when you switch back. However, if you <b>stash</b>ed them, you will have to<br>
+            // pull them back off of the stash stack. You do this with the following command:<br><br>
+            : git stash pop<br><br>
+            // Now your changes to testbranch.html will be restored<br>
+            // Let's finish up whatever modifications you were making to the testbranch.html before you were interrupted by<br>
+            // the urgent bug request. Use your editor here to make the changes.<br>
+            // Once you're done with the changes, commit them to your working branch (currently <i>newfeature</i>)<br><br>
+            : git add testbranch.html<br>
+            : git commit -m "Adding the new feature"<br><br>
+            // So now <i>newfeature</i> has the committed changes, but we need to merge them with <i>main</i><br><br>
+            : git switch main<br>
+            : git merge newfeature<br><br>
+            // This merge will be different than the last, because it is not a simple "Fast-forward". <i>main</i> has been<br>
+            // modified by your <i>bugfix</i> changes since the <i>newfeature</i> branch was created. Therefore, this merge<br>
+            // will attempt to reconcile the differences between your changes in <i>newfeature</i> and the changes in <i>bugfix</i>.<br>
+            // If different parts of the file were modified, then the merge will often happen automatically, without user input.<br>
+            // However, if the same parts of the file were modified, you will often be prompted to resolve the conflicts manually.<br>
+            // Open the conlicted file with your editor, manually make the changes necessary, then mark the file as resolved by<br>
+            // staging it:<br><br>
+            : git add testbranch.html<br><br>
+            // Finally, commit the merge:<br><br>
+            : git commit<br><br>
+            // Add comments regarding the way that you went about resolving the merge.
+
+        </div>
+    </body>
+</html>
