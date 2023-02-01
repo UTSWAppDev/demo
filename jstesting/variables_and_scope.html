@@ -8,10 +8,10 @@
     
         <script>
             // demonstrate scope
-            // let x = 1;
+            let x = 1;
             function TestScope() {
-                let x = 1;
-                alert("Here is x inside TestScope: " + x);
+                // let x = 1;
+              //  alert("Here is x inside TestScope: " + x);
             }
             TestScope();
 
@@ -19,12 +19,14 @@
             //alert("Here is x outside of TestScope: " + x); 
 
             // demonstrate dynamic typing
-            let x = 5;  // so far, x is a number
+            x = 5;  // so far, x is a number
             console.log(x); // shows 5
             console.log(4 + x); // numeric addition. 4 + 5 = 9
-            console.log("4" + x);   // shows 45. JavaScript treated x as a string here because
+            console.log(x + "4");   // shows 45. JavaScript treated x as a string here because
                                     // we told it to add it to a another string.
                                     // 4 is a number. "4" is a string
+            let y= (x + "4");
+            console.log(y + 10);
             x = "cat";  // now x is a string
             console.log(x);
 

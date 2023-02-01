@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Input Types</title>
+    <style>
+        .body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .exgroup {
+            border-style: solid;
+            padding: 10px;
+        }
+
+        .inputgroup {
+            border-style: solid;
+            background-color: lightgrey;
+            margin: 10px 0px 10px 0px;
+            padding: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="exgroup">
+        <h1>Checkboxes</h1>
+        <div class="inputgroup">
+            <label>Option 1</label><input type="checkbox"><br>
+            <label>Option 2</label><input type="checkbox"><br>
+            <label>Option 3</label><input type="checkbox"><br>
+            <label>Option 4</label><input type="checkbox"><br>
+        </div>
+    </div>
+    <div class="exgroup">
+        <h1>Radio Buttons</h1>
+        <div class="inputgroup">
+            <!-- Notice that the name attribute must be the same to make the options mutually exclusive-->
+            <label>Option 1</label><input type="radio" name="radiogroup"> 
+            <label>Option 2</label><input type="radio" name="radiogroup">
+            <label>Option 3</label><input type="radio" name="radiogroup">
+            <label>Option 4</label><input type="radio" name="radiogroup">
+        </div>
+    </div>
+    <div class="exgroup">
+        <h1>Drop Down Menu</h1>
+        <div class="inputgroup">
+            <label>Selection:</label>
+            <select>
+                <option selected></option> <!-- Notice that setting "selected" here makes the empty option the default -->
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+                <option>Option 4</option>
+            </select>
+        </div>
+    </div>
+    <div class="exgroup">
+        <h1>Text Box</h1>
+        <div class="inputgroup">
+            <label>Please enter your options here:</label>
+            <input type="text">
+        </div>
+    </div>
+</body>
+
+</html>
