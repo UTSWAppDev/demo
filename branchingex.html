@@ -7,12 +7,24 @@
     <body style="font-family:'Courier New', Courier, monospace;">
         <h2 style="background-color:lightgray;">Branching Exercise</h2>
         <div style="border-style: solid; width: 100%;">
+            // Open Git Bash<br>
+            // Check your current directory<br><br>
+            : pwd<br><br>
+            // List the files and directories within your current directory<br><br>
+            : ls<br><br>
+            // Change directories to get to a directory you recognize, one you can easily find later.<br>
+            // The command to change directories is: cd <i>NameOfDirectory</i><br>
+            // You can jump multiple directories by separating them with a forward slash "/"<br><br>
+            // An example for Windows users:<br>
+            : cd /c/Users/<i>S123456</i>/Documents<br><br>
+            // An example for MacOS users:<br>
+            : cd /Users/<i>YourUserName</i><br><br>
             <p>// Create a new folder to use as your git repository and initialize it</p>
             : mkdir <i>RepoFolder</i><br>
             : cd <i>RepoFolder</i><br>
             : git init<br><br>
             // Now create a new file in the repository<br>
-            // You can use vim, notepadd++, or whatever editor you'd like to create a file named 'testbranch.html'<br>
+            // You can use notepad, notepad++, VS Code, or whatever editor you'd like to create a file named 'testbranch.html'<br>
             // Add some basic HTML to the file:<br><br>
             <div style="padding-left: 15px;">
             <textarea cols="50" rows="17">
@@ -42,22 +54,22 @@
             : git switch newfeature<br>
             // By the way, the command 'git switch -c newfeature' does the same thing as the last two lines, only in one line<br><br>
             <p>// Now start making some edits to testbranch.html. Maybe add a table, or just simple text. Whatever you like<br>
-            // Again, use notepad++, VS Code, brackets, whatever you like to edit files</p>
+            // Again, use notepad++, VS Code, brackets, whatever you like to edit files. Save the changes in your editor.</p>
             // Uh-oh! You just got a request for an urgent bug fix.<br>
             // The customer wants the h1 element to have a green background instead of grey<br>
             // You aren't ready to commit your <i>newfeature</i> changes yet, but you need to quickly fix the customer request<br>
-            // The solution here is to create another new branch for this urgent bug fix<br><br>
-            // First, change back to the main branch, because we want to create the bugfix branch off the main branch, not off of<br>
-            // the <i>newfeature</i> branch. But before we can do that, we must either <b>commit</b> or <b>stash</b> our changes<br><br>
-            // If you are happy with the status of your changes right now, you could <b>commit</b> them to the newfeature branch.<br>
-            // But if your code is still sloppy and not ready for a commit, you can stash it away and come back to it<br><br>
+            // The solution here is to create another new branch for this urgent bug fix.<br><br>
+            // We want to create the new branch off of the main branch. But before we can switch back to the main branch, we<br>
+            // must save the work that we started on the <i>newfeature</i> branch. If you are happy with the status of your<br>
+            // changes right now, you could <b>commit</b> them to the newfeature branch. But if your code is still sloppy and<br>
+            // not ready for a commit, you can stash it away and come back to it later.<br><br>
             : git stash<br><br>
             // This step is important, because when you change branches, your files in your working directory get replaced with their<br>
             // versions from the branch you are switching to. So if you have uncommitted and un-stashed changes, they will be lost<br>
             // when you <b>switch</b>.<br><br>
-            // Now that our changes are stashed, we can switch back to the main to continue work on the bugfix<br><br> 
+            // Now that our changes are stashed, we can switch back to the main to create a new branch for the bug fix.<br><br> 
             : git switch main<br><br>
-            // While we're here, take a look at your testbranch.html file. By switching branches, git automatically replaced<br>
+            // While we're here, look at the contents of testbranch.html file. By switching branches, git automatically replaced<br>
             // the file with the one from the main branch. It now looks like it did before you started editing it in <i>newfeature</i><br><br>
             // Now create another branch, this time called 'bugfix'. We'll use the more concise version<br>
             // this time to create the branch and switch to it<br><br>
