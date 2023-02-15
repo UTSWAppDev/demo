@@ -19,6 +19,18 @@
             </div>
         </div>
         <div style="border-style: solid; width: 100%;">
+            // Open Git Bash<br>
+            // Check your current directory<br><br>
+            : pwd<br><br>
+            // List the files and directories within your current directory<br><br>
+            : ls<br><br>
+            // Change directories to get to a directory you recognize, one you can easily find later.<br>
+            // The command to change directories is: cd <i>NameOfDirectory</i><br>
+            // You can jump multiple directories by separating them with a forward slash "/"<br><br>
+            // An example for Windows users:<br>
+            : cd /c/Users/<i>S123456</i>/Documents<br><br>
+            // An example for MacOS users:<br>
+            : cd /Users/<i>YourUserName</i><br><br>
             <p>// Clone your team's repository</p>
             : git clone https://github.com/UTSWAppDev/<span class="txtTeam"><i>YourTeamName</i></span><br>
             : cd <span class="txtTeam"><i>YourTeamName</i></span><br><br>
@@ -42,8 +54,8 @@
             // Now your remote tracking branch "origin/main" reflects the commit made by the first team member. You can now<br>
             // merge "origin/main" into your local main as if it were a local branch. Remember the syntax for merging:<br><br>
             : git merge origin/main<br><br>
-            // Resolve conflicts, if there are any. Once the merge is complete, then this team member can finally push his<br>
-            // local branch to the remote.<br><br>
+            // Resolve conflicts, if there are any. Once the merge is complete, your local file will now reflect both your<br>
+            // changes as well as your teammates earlier changes. Now you are able to push your local branch to the remote.<br><br>
             : git push origin main<br><br>
             // Repeat these steps of modifying content, commiting, and pushing for the remaining two team members until<br>
             // everyone has modified the file.<br><br>
