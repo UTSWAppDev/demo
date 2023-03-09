@@ -9,27 +9,33 @@
 
   <h1>Patients</h1>
   <div id="output">Loading...</div>
-
+  <div id="action">
+    <input id="encounters" type="button" value="Encounters">
+    <input id="editpt" type="button" value="Edit">
+  </div>
   </body>
 
   <script>
         
     const client = new FHIR.client("https://r4.smarthealthit.org");
+    let iActive = 0;
+    let outputBox = document.getElementById("output");
+    let actionBox = document.getElementById("action");
+
+    outputBox.style.height = "500px";
+    outputBox.style.overflowY = "scroll";
     
     // query the FHIR server for list of all Patients
     client.request("Patient", { pageLimit: 0, flat: true }).then(function (patientList) {
-    
-        let outputBox = document.getElementById("output");
-        let patientTable = document.createElement("table");
-
         
         outputBox.innerText = "";
+        let patientTable = document.createElement("table");
         outputBox.appendChild(patientTable);
         
         // loop over all the patients and insert them into the table
         patientList.forEach(function(patient) {
             let row = patientTable.insertRow();
-            row.onclick = () => window.location = 'encounters.html?patient=' + patient.id
+            row.onclick = () => iActive = patient.id
             let cellA = row.insertCell();
             let cellB = row.insertCell();
             let cellC = row.insertCell();
@@ -38,6 +44,15 @@
             cellC.innerText = patient.birthDate;
         });
     });
+
+    // Add the edit and encounters buttons
+    let btnEncounter = document.getElementById("encounters");
+    btnEncounter.onclick = () => window.location = "encounters.html?patient=" + iActive;
+    let btnEdit = document.getElementById("editpt");
+    btnEdit.onclick = () => window.location = "patient.html?patient=" + iActive;
+    actionBox.appendChild(btnEncounter);
+    actionBox.appendChild(btnEdit);
+
   </script>
 
 </html> 

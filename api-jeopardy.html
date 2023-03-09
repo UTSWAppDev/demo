@@ -7,7 +7,7 @@
         function fetchQuestion() {
             let answerPane = document.getElementById('answer-pane');
             answerPane.style.color = 'white';
-            fetch('http://jservice.io/api/random')
+            fetch('https://jservice.io/api/random')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('question-pane').innerHTML = data[0].question;
