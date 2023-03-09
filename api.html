@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Random Joke Generator</title>
+  </head>
+  <body>
+    <h1>Random Joke Generator</h1>
+    <div id="joke"></div>
+    <button onclick="refreshJoke()">Refresh</button>
+    
+    <script>
+      function refreshJoke() {
+        fetch('https://official-joke-api.appspot.com/random_joke')
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('joke').innerHTML = data.setup + " " + data.punchline;
+          });
+      }
+    </script>
+  </body>
+</html>
+
