@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Jeopardy</title>
+    <script>
+        function fetchQuestion() {
+            let answerPane = document.getElementById('answer-pane');
+            answerPane.style.color = 'white';
+            fetch('http://jservice.io/api/random')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('question-pane').innerHTML = data[0].question;
+                    answerPane.innerHTML = data[0].answer;
+                });
+        }
+
+        function showAnswer() {
+            document.getElementById('answer-pane').style.color = "black";
+        }
+        
+    </script>
+</head>
+
+<body>
+    <h1>Jeopardy</h1>
+    <div>
+        <h2>Question</h2>
+        <p id="question-pane"></p>
+        <button id="new-question-btn">New Question</button>
+    </div>
+    <div>
+        <h2>Answer</h2>
+        <p id="answer-pane"></p>
+        <button id="show-answer-btn">Show Answer</button>
+    </div>
+
+    <script>
+        document.getElementById('new-question-btn').onclick = fetchQuestion;
+        document.getElementById('show-answer-btn').onclick = showAnswer;
+    </script>
+</body>
+
+</html>
