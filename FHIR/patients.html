@@ -12,7 +12,8 @@
   <h1>Patients</h1>
   <div id="output">Loading...</div>
   <div id="action">
-    <input id="encounters" type="button" value="Encounters">
+    <input id="btnGrowth" type="button" value="Growth Chart">
+    <input id="btnEncounters" type="button" value="Encounters">
     <input id="editpt" type="button" value="Edit">
   </div>
 </body>
@@ -67,7 +68,9 @@
   client.request("Patient", { pageLimit: 0, flat: true }).then(function(value) { CreatePatientTable(value) });
 
   // Add the edit and encounters buttons
-  let btnEncounter = document.getElementById("encounters");
+  let btnGrowth = document.getElementById("btnGrowth");
+  btnGrowth.onclick = () => window.location = "growthchart.html?patient=" + iActive;
+  let btnEncounter = document.getElementById("btnEncounters");
   btnEncounter.onclick = () => window.location = "encounters.html?patient=" + iActive;
   let btnEdit = document.getElementById("editpt");
   btnEdit.onclick = () => window.location = "patient.html?patient=" + iActive;

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Growth Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div>
+        <canvas id="growthChart"></canvas>
+    </div>
+
+    <script>
+        // get the patient id out of the GET search params
+        let searchParams = new URLSearchParams(window.location.search);
+        let patientId = searchParams.get('patient');
+        // for debugging. If no patient provided, use test patient.
+        if (!patientId) {
+            patientId = "87a339d0-8cae-418e-89c7-8651e6aab3c6";
+        }
+
+        //create the FHIR client
+        const client = new FHIR.client("https://r4.smarthealthit.org");
+
+        // identify the canvas where we'll put the chart
+        const growthChart = document.getElementById("growthChart");
+
+        // query the FHIR server for the weight data
+        client.request(`Observation?patient=${patientId}&code=29463-7`, { pageLimit: 0, flat: true }).then(function (value) { BuildGrowthChart(value) } );
+
+        // take the JSON response and pull the data we care about (weight and time measured)
+        function ParseFHIRBundle(bundle) {
+            let returnMatrix = {};
+            bundle.forEach(observation => {
+                console.log(observation);
+                returnMatrix[new Date(observation.effectiveDateTime)] = observation.valueQuantity.value;
+            });
+            return returnMatrix;
+        }
+
+        function GetWeightsInChronologicalOrder(obj) {
+            const dates = Object.keys(obj); // extract and parse dates
+            dates.sort((a, b) => new Date(a) - new Date(b)); // sort dates in chronological order
+            const weights = [];
+            for (const date of dates) {
+                weights.push(obj[date]); 
+            }       
+            return weights;
+        }
+
+        function BuildGrowthChart(bundleWeights) {
+            let weightMatrix = ParseFHIRBundle(bundleWeights);
+            let sortedDates = Object.keys(weightMatrix).sort((a, b) => new Date(a) - new Date(b));
+            // create the Chart.js line graph
+            new Chart(growthChart, {
+                type: 'line',
+                data: {
+                    labels: sortedDates,
+                    datasets: [{
+                        label: 'Weight (kg)',
+                        data: GetWeightsInChronologicalOrder(weightMatrix),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
