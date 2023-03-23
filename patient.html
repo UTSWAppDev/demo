@@ -1,60 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
+
+<head>
     <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
-    </head>
+</head>
+
 <body>
 
-<h1>Patient Editor</h1>
-<div id="workspace" style="height: 450px">Loading...
-    <div class="w2ui-buttons">
-        <button name="reset" class="w2ui-btn " tabindex="4">Reset</button>
-        <button name="save"  class="w2ui-btn w2ui-btn-blue" tabindex="5">Save</button>
+    <h1>Patient Editor</h1>
+    <div id="workspace" style="height: 450px">Loading...
+        <div class="w2ui-buttons">
+            <button name="reset" class="w2ui-btn " tabindex="4">Reset</button>
+            <button name="save" class="w2ui-btn w2ui-btn-blue" tabindex="5">Save</button>
+        </div>
+
     </div>
-        
-</div>
 
-<script type="module">
-    let pagePatient = {};
-    import { w2form, query, w2ui, w2popup, w2alert } from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js'
-    let searchParams = new URLSearchParams(window.location.search);
-    let patientId = searchParams.get('patient');        
-    const client = new FHIR.client("https://r4.smarthealthit.org");
+    <script type="module">
+        let pagePatient = {};
+        import { w2form, query, w2ui, w2popup, w2alert } from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js'
+        let searchParams = new URLSearchParams(window.location.search);
+        let patientId = searchParams.get('patient');
+        const client = new FHIR.client("https://r4.smarthealthit.org");
 
-    function savePatient(patient){
-        client.update(patient).then(event => console.log(event));
-    }
-    client.request(`Patient/${patientId}`).then(function (patient) {
-        pagePatient = patient;
-        let formattedPatient = { id: patient.id, name: patient.name[0].family, birthDate: patient.birthDate };
-        let form = new w2form({
-            box: '#workspace',
-            name: 'workspace',
-            record: formattedPatient,
-            // formURL: 'data/form.html',    // you can load form from extenral file
-            //formHTML: query('#workspace').html(), // or you can use form that is already in HTML
-            fields: [
-                { field: 'name', type: 'text', required: true, label: "Name" },
-                { field: 'birthDate',  type: 'date', required: true, label: "Birth Date" },
-            ],
-            onChange: function(event){
-                console.log(event);
-            },
-            actions: {
-                reset() {
-                    this.clear()
+        function savePatient(patient) {
+            client.update(patient).then(event => console.log(event));
+        }
+        client.request(`Patient/${patientId}`).then(function (patient) {
+            pagePatient = patient;
+            let formattedPatient = { id: patient.id, familyName: patient.name[0].family, givenName: patient.name[0].given[0], birthDate: patient.birthDate };
+            let form = new w2form({
+                box: '#workspace',
+                name: 'workspace',
+                record: formattedPatient,
+                // formURL: 'data/form.html',    // you can load form from extenral file
+                //formHTML: query('#workspace').html(), // or you can use form that is already in HTML
+                fields: [
+                    { field: 'givenName', type: 'text', required: true, label: "Given Name" },
+                    { field: 'familyName', type: 'text', required: true, label: "Family Name" },
+                    { field: 'birthDate', type: 'date', required: true, label: "Birth Date" },
+                ],
+                onChange: function (event) {
+                    console.log(event);
                 },
-                save() {
-                    patient.birthDate = new Date(this.record.birthDate).toISOString(); //document.getElementById("name").innerText;
-                    patient.name[0].family = this.record.name; //document.getElementById("birthDate").innerText;
-                    savePatient(patient);
+                actions: {
+                    reset() {
+                        this.clear()
+                    },
+                    save() {
+                        patient.birthDate = new Date(this.record.birthDate).toISOString(); //document.getElementById("name").innerText;
+                        patient.name[0].family = this.record.familyName; //document.getElementById("birthDate").innerText;
+                        patient.name[0].given[0] = this.record.givenName; //document.getElementById("birthDate").innerText;
+                        savePatient(patient);
+                    }
                 }
-            }
+            })
         })
-    })
-</script>
+    </script>
 
 </body>
-</html> 
+
+</html>

@@ -13,3 +13,7 @@ table {
   tr:nth-child(even) {
     background-color: #dddddd;
   }
+
+  tr.selected {
+    background-color: blue;
+  }

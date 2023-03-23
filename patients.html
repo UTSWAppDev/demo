@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Patient List</title>
-    <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
-    <link rel="stylesheet" href="demostyle.css">
-  </head>
-  <body>
+
+<head>
+  <title>Patient List</title>
+  <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
+  <link rel="stylesheet" href="demostyle.css">
+</head>
+
+<body>
 
   <h1>Patients</h1>
   <div id="output">Loading...</div>
@@ -13,46 +15,65 @@
     <input id="encounters" type="button" value="Encounters">
     <input id="editpt" type="button" value="Edit">
   </div>
-  </body>
+</body>
 
-  <script>
-        
-    const client = new FHIR.client("https://r4.smarthealthit.org");
-    let iActive = 0;
-    let outputBox = document.getElementById("output");
-    let actionBox = document.getElementById("action");
+<script>
 
-    outputBox.style.height = "500px";
-    outputBox.style.overflowY = "scroll";
-    
-    // query the FHIR server for list of all Patients
-    client.request("Patient", { pageLimit: 0, flat: true }).then(function (patientList) {
-        
-        outputBox.innerText = "";
-        let patientTable = document.createElement("table");
-        outputBox.appendChild(patientTable);
-        
-        // loop over all the patients and insert them into the table
-        patientList.forEach(function(patient) {
-            let row = patientTable.insertRow();
-            row.onclick = () => iActive = patient.id
-            let cellA = row.insertCell();
-            let cellB = row.insertCell();
-            let cellC = row.insertCell();
-            cellA.innerText = patient.id;
-            cellB.innerText = patient.name[0].family;
-            cellC.innerText = patient.birthDate;
+  // define the FHIR client
+  const client = new FHIR.client("https://r4.smarthealthit.org");
+  // define other global variables
+  let iActive = 0;
+  let lastRow;
+  let lastStyle;
+  let outputBox = document.getElementById("output");
+  let actionBox = document.getElementById("action");
+
+  outputBox.style.height = "500px";
+  outputBox.style.overflowY = "scroll";
+
+  function CreatePatientTable(patientList) {
+    // this is the function that accepts the Promise result from the FHIR query
+    // and then iterates over each patient and puts it into the table
+    outputBox.innerText = "";
+    let patientTable = document.createElement("table");
+    patientTable.id = "patientTable";
+    outputBox.appendChild(patientTable);
+
+    // loop over all the patients and insert them into the table
+    patientList.forEach(function (patient) {
+      let row = patientTable.insertRow();
+      // setup the onclick to do things like style changes and set the id of the selected row
+      row.addEventListener('click', function () {
+        iActive = patient.id;
+        let rows = document.querySelectorAll('#patientTable tr');
+        // Remove the "selected" class from all rows
+        rows.forEach(function (row) {
+          row.classList.remove('selected');
         });
-    });
+        console.log(row);
+        // Add the "selected" class to the clicked row
+        row.classList.add('selected');
+      });
+      // add the cells to the row
+      let cellA = row.insertCell();
+      let cellB = row.insertCell();
+      let cellC = row.insertCell();
+      cellA.innerText = patient.id;
+      cellB.innerText = patient.name[0].family + ", " + patient.name[0].given[0];
+      cellC.innerText = patient.birthDate;
+      });
+  }
+  // query the FHIR server for list of all Patients
+  client.request("Patient", { pageLimit: 0, flat: true }).then(function(value) { CreatePatientTable(value) });
 
-    // Add the edit and encounters buttons
-    let btnEncounter = document.getElementById("encounters");
-    btnEncounter.onclick = () => window.location = "encounters.html?patient=" + iActive;
-    let btnEdit = document.getElementById("editpt");
-    btnEdit.onclick = () => window.location = "patient.html?patient=" + iActive;
-    actionBox.appendChild(btnEncounter);
-    actionBox.appendChild(btnEdit);
+  // Add the edit and encounters buttons
+  let btnEncounter = document.getElementById("encounters");
+  btnEncounter.onclick = () => window.location = "encounters.html?patient=" + iActive;
+  let btnEdit = document.getElementById("editpt");
+  btnEdit.onclick = () => window.location = "patient.html?patient=" + iActive;
+  actionBox.appendChild(btnEncounter);
+  actionBox.appendChild(btnEdit);
 
-  </script>
+</script>
 
-</html> 
+</html>
