@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>FHIR demo</title>
+
+  <!-- This is the library that lets us make FHIR calls using JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
+</head>
+
+<body>
+
+  <h1>Weights</h1>
+  <pre id="output">Loading...</pre>
+
+  <script>
+    // get the patient id out of the GET search params
+    let searchParams = new URLSearchParams(window.location.search);
+    let patientId = searchParams.get('patient');
+    
+    // for debugging. If no patient provided, use test patient.
+    if (!patientId) {
+      patientId = "87a339d0-8cae-418e-89c7-8651e6aab3c6";
+    }
+    
+    // define the FHIR client
+    const client = new FHIR.client("https://r4.smarthealthit.org");
+    
+    // define other global variables
+    let outputBox = document.getElementById("output");
+  
+  
+    function CreateOutput(weightList) {
+      let output = "";
+      weightList.forEach(weight => {
+        output = output + "<br><br>" + JSON.stringify(weight, null, 2);
+      });
+      outputBox.innerHTML = output;
+    }
+  
+    // query the FHIR server for list of all Patients
+    client.request(`Observation?patient=${patientId}&code=29463-7`, { pageLimit: 0, flat: true }).then(function (value) { CreateOutput(value) });
+
+  </script>
+</body>
+</html>
+

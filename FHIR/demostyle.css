@@ -15,5 +15,5 @@ table {
   }
 
   tr.selected {
-    background-color: blue;
+    background-color: lightblue;
   }
