@@ -1,22 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            Writing HTML Faster
-        </title>
-    </head>
-    <body>
-        <h1>This is what development is like with an IDE!</h1>
-        <h2 onclick="IncCount()">Click Counter: </h2><div id="count"></div>
 
-        <script>
+<head>
+    <title>
+        Writing HTML Faster
+    </title>
+</head>
+
+<body>
+    <h1>This is what development is like with an IDE!</h1>
+    <h2 onclick="IncCount()"><a href="#">Click Counter: </a></h2>
+    <div id="count"></div>
+    <h2 onclick="Drive()"><a href="#">Drive my car?</a></h2>
+    <div id="car" style="width: 50%;"></div>
+
+    <script>
+        let auto = {
+            make: "Porsche",
+            model: "911 Turbo S",
+            year: 1997,
+            chassis_code: 993,
+            color: "black",
+            imgsrc: "https://i.redd.it/clncqvkaz2641.jpg",
+            drive: function () { alert("vroom, vroom") }
+        }
+
+        function IncCount() {
             let x = 0;
+            const countdiv = document.getElementById("count");
+            x++;
+            countdiv.innerHTML = x;
+        }
 
-            function IncCount() {
-                let countdiv = document.getElementById(count);
-                x++;
-                countdiv.innerHTML = x;
-            }
-        </script>
-    </body>
+        function Drive() {
+            const cardiv = document.getElementById(car);
+            const carimg = document.createElement("img");
+            carimg.src = auto.imgsrc;
+            carimg.style.width = "100%";
+            carimg.onclick = auto.drive;
+            cardiv.appendChild(carimg);
+        }
+    </script>
+</body>
+
 </html>
