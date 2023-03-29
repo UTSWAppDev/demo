@@ -22,10 +22,9 @@
 
   // define the FHIR client
   const client = new FHIR.client("https://r4.smarthealthit.org");
+  
   // define other global variables
   let iActive = 0;
-  let lastRow;
-  let lastStyle;
   let outputBox = document.getElementById("output");
   let actionBox = document.getElementById("action");
 
