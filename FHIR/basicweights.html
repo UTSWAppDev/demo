@@ -29,17 +29,16 @@
     // define other global variables
     let outputBox = document.getElementById("output");
   
-  
+    // query the FHIR server for list of all weights for the patient id
+    client.request(`Observation?patient=${patientId}&code=29463-7`, { pageLimit: 0, flat: true }).then(function (value) { CreateOutput(value) });
+
     function CreateOutput(weightList) {
       let output = "";
-      weightList.forEach(weight => {
-        output = output + "<br><br>" + JSON.stringify(weight, null, 2);
+      weightList.forEach(weight => {  // forEach iterates over each json element in the FHIR bundle
+        output = output + "<br><br>" + JSON.stringify(weight, null, 2); // turn the JSON element into a string that can be printed. (, null, 2) just makes the output pretty
       });
       outputBox.innerHTML = output;
     }
-  
-    // query the FHIR server for list of all Patients
-    client.request(`Observation?patient=${patientId}&code=29463-7`, { pageLimit: 0, flat: true }).then(function (value) { CreateOutput(value) });
 
   </script>
 </body>

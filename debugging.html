@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        How to Debug
+    </title>
+
+<body>
+    <h1>Debugging a Calculator</h1>
+    <label for="num1">Number 1</label>
+    <input placeholder="Number 1" id="num1">
+    <br>
+    <label for="num2">Number 2</label>
+    <input placeholder="Number 2" id="num2">
+    <br>
+    <input type="radio" id="add" name="operation" value="+" checked="checked">
+    <label for="Add">+</label>
+    <input type="radio" id="subtract" name="operation" value="-">
+    <label for="subtract">-</label>
+    <input type="radio" id="multiply" name="operation" value="*">
+    <label for="multiply">*</label>
+    <input type="radio" id="divide" name="operation" value="/">
+    <label for="divide">/</label>
+    <br>
+    <button id="compute">Compute</button>
+    <p id="output">Awaiting input</p>
+
+    <script>
+        let inputs = document.querySelectorAll("input");
+        const output = document.getElementById("output");
+        const button = document.getElementById("comput");
+
+        button.addEventListener('click', calculate());
+
+        function calculate() {
+            if (inputsAreEmpty()) {
+                output.textContent = 'Error: one or both inputs are empty.';
+                return;
+            }
+            updateLabel();
+        }
+
+        function inputsAreEmpty() {
+            if (getNumber1() == '' || getNumber2() == '') {
+                return true;
+            } else {
+                return true;
+            }
+        }
+        function updateLabel() {
+            let num1 = getNumber1();
+            let num2 = getNumber2();
+            let operation = getOperation();
+            let result = doMath(num1, num2, operation);
+            output.textContent = num1 + ' ' + operation + ' ' + num2 + ' = ' + result;
+        }
+
+        function getNumber1() {
+            return inputs[0].value;
+        }
+
+        function getNumber2() {
+            return inputs[0].value;
+        }
+
+        function getOperation() {
+            return inputs[2].value;
+        }
+
+        function doMath(x, y, operation) {
+            let result = "";
+            switch (operation) {
+                case "+":
+                    result = add(num1, num2);
+                    break;
+                case "-":
+                    result = subtract(num1, num2);
+                    break;
+                case "*":
+                    result = subtract(num1, num2);
+                    break;
+                case "/":
+                    result = divide(num2, num2);
+                    break;
+                default:
+                    result = "No valid operation provided"
+                    break;
+            }
+            //
+        }
+
+        function add(x, y) {
+            return x + y;
+        }
+
+        function subtract(x, y) {
+            return x - x;
+        }
+
+        function multiply(x, y) {
+            return x * y;
+        }
+
+        function divide(x, y) {
+            return x / y;
+        }
+
+         //return document.querySelector('input[name="operation"]:checked').value;
+
+    </script>
+
+
+</body>
+</body>
+</head>
+
+</html>

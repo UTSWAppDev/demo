@@ -35,7 +35,6 @@
         function ParseFHIRBundle(bundle) {
             let returnMatrix = {};
             bundle.forEach(observation => {
-                console.log(observation);
                 returnMatrix[new Date(observation.effectiveDateTime)] = observation.valueQuantity.value;
             });
             return returnMatrix;
