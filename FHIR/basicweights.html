@@ -13,34 +13,56 @@
   <h1>Weights</h1>
   <pre id="output">Loading...</pre>
 
-  <script>
+  <script type="module">
+    import { FHIRwrapper } from "https://UTSWAppDev.github.io/demo/lib/FHIRwrapper.js";
+
     // get the patient id out of the GET search params
     let searchParams = new URLSearchParams(window.location.search);
     let patientId = searchParams.get('patient');
-    
+
     // for debugging. If no patient provided, use test patient.
     if (!patientId) {
       patientId = "87a339d0-8cae-418e-89c7-8651e6aab3c6";
     }
-    
-    // define the FHIR client
-    const client = new FHIR.client("https://r4.smarthealthit.org");
-    
-    // define other global variables
-    let outputBox = document.getElementById("output");
-  
-    // query the FHIR server for list of all weights for the patient id
-    client.request(`Observation?patient=${patientId}&code=29463-7`, { pageLimit: 0, flat: true }).then(function (value) { CreateOutput(value) });
 
-    function CreateOutput(weightList) {
+    // define the FHIR wrapper. You should just copy this line verbatim
+    const wrapper = new FHIRwrapper(FHIR, "https://r4.smarthealthit.org");
+
+    // get a place to put your output
+    const outputBox = document.getElementById("output");
+
+    // getting ready query the FHIR server for list of all weights for the patient id
+    wrapper.resource = "Observation";         //what is the resource that you're interested in?
+    wrapper.addFilter("patient", patientId);  //add as many filters as you like. this one filters by a single patient
+    wrapper.addFilter("code", "29463-7");     //filter only by body weight observations
+    // wrapper.processFunction = CreateString;   //uncomment this line if you'd rather just see a string output insted of a table
+    wrapper.processFunction = CreateTable;    //pass the table generating function instead of the stringify function
+    wrapper.execute();                        // do it!
+
+    // this is the function that we pass to the wrapper to actually parse the resource bundle results
+    function CreateString(weightList) {
       let output = "";
-      weightList.forEach(weight => {  // forEach iterates over each json element in the FHIR bundle
+      weightList.forEach(weight => {  // forEach makes a loop. it runs once for each json element in the FHIR bundle
         output = output + "<br><br>" + JSON.stringify(weight, null, 2); // turn the JSON element into a string that can be printed. (, null, 2) just makes the output pretty
       });
       outputBox.innerHTML = output;
     }
 
+    // what if we wanted to make a list instead of just printing the JSON? Here is a different function we can pass to the wrapper
+    function CreateTable(weightList) {
+      const table = document.createElement("table");  //create a new table that will house the weights
+      outputBox.appendChild(table);                   //add that table to the output div
+      weightList.forEach(weight => {                  //forEach makes a loop. This loop runs once per element in the FHIR bundle
+        const row = table.insertRow();                //add a new row for each weight
+        const row1 = row.insertCell();                //add two cells, one for the date and one for the weight
+        const row2 = row.insertCell();
+        row1.innerHTML = weight.effectiveDateTime;    //add the date to the first cell
+        row2.innerHTML = weight.valueQuantity.value;  //add the weight to the 2nd cell
+      })
+
+    }
+
   </script>
 </body>
-</html>
 
+</html>
