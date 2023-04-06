@@ -28,7 +28,7 @@
     <p id="output">Awaiting input</p>
 
     <script>
-        let inputs = document.querySelectorAll("input");
+        const inputs = document.querySelectorAll("input");
         const output = document.getElementById("output");
         const button = document.getElementById("comput");
 
@@ -43,7 +43,9 @@
         }
 
         function inputsAreEmpty() {
-            if (getNumber1() == '' || getNumber2() == '') {
+            let num1 = getNumber1();
+            let num2 = getNumber2()
+            if (num1 == '' || num2 == '') {
                 return true;
             } else {
                 return true;
@@ -53,7 +55,7 @@
             let num1 = getNumber1();
             let num2 = getNumber2();
             let operation = getOperation();
-            let result = doMath(num1, num2, operation);
+            let result = doMath(num1, num1, operation);
             output.textContent = num1 + ' ' + operation + ' ' + num2 + ' = ' + result;
         }
 

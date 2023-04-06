@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wordplay</title>
+</head>
+
+<body>
+    <label for="palindrome">Palindrome Tester: </label>
+    <input type="text" id="palindrome"><br><br>
+    <label for="score1">Word Scoring: </label>
+    <input type="text" id="word1"><span id="score1"></span>
+    <input type="text" id="word2"><span id="score2"></span>
+
+    <script>
+        //set up all the DOM objects
+        inputPalindrome = document.getElementById("palindrome");
+        inputWord1 = document.getElementById("word1");
+        inputWord2 = document.getElementById("word2");
+        score1 = document.getElementById("score1");
+        score2 = document.getElementById("score2");
+
+        //add all the event handlers
+        inputPalindrome.addEventListener("input", palindromeChanged);
+        inputWord1.addEventListener("input", wordChanged);
+        inputWord2.addEventListener("input", wordChanged);
+
+        //event handler functions
+        function palindromeChanged(event) {
+            if (isPalindrome(inputPalindrome.value)) {
+                inputPalindrome.style.backgroundColor = "green";
+            } else {
+                inputPalindrome.style.backgroundColor = "red";
+            }
+        }
+
+        function wordChanged(event) {
+            if (event.srcElement.id == "word1") {
+                scoretarget = score1;
+            } else {
+                scoretarget = score2;
+            }
+            score = stringScore(event.srcElement.value);
+            scoretarget.innerHTML = score;
+
+            if (compareStringScores(inputWord1.value, inputWord2.value)) {
+                inputWord1.style.backgroundColor = inputWord2.style.backgroundColor = "green";
+            } else {
+                inputWord1.style.backgroundColor = inputWord2.style.backgroundColor = "red";
+            }
+        
+        }
+       
+        //isPalindrome: string -> boolean
+        //evaluates string argument to see if it meets the criteria of a palindrome (same forwards and backwards). returns true if so, false if not
+        // function isPalindrome(str) {
+        //     return true;
+        // }
+        function isPalindrome(str) {
+            str = str.toString();
+            let reversedString = reverseString(str);
+            if (str == reversedString) {
+                return true;
+            } else {
+                return false;
+            }
+            //return str === str.split("").reverse().join("");
+        }
+
+        //reverseString: string -> string
+        //returns a string in reverse order as the input
+        // function reverseString(str) {
+        //     return "a";
+        // }
+        function reverseString(str) {
+            let reversedString = "";
+            for (let i = str.length; i >= 0; i--) {
+                reversedString += str.charAt(i);
+            }
+            return reversedString;
+        }
+
+        //stringScore: string -> number
+        //returns a sum of the "values" of letters indexed to a=1, b=2, c=3, etc
+        // function stringScore(str) {
+        //     return 0;
+        // }
+        function stringScore(str) {
+            let sum = 0;
+            for (let i = 0; i < str.length; i++) {
+                sum += str.charCodeAt(i) - 96;
+            }
+            return sum;
+        }
+
+        //compareStringScores: string, string -> boolean
+        //returns true if two strings have the same scores, otherwise false
+        function compareStringScores(str1, str2) {
+            return stringScore(str1) == stringScore(str2);
+        }
+
+        /*function loadTextFile(path, funcOnReturn) {
+            fetch(path)
+            .then(response => response.text())
+            .then(data => funcOnReturn(data))
+        }
+
+        function splitTextFileByCRLF(str) {
+
+        }
+*/
+
+    </script>
+</body>
+
+</html>
