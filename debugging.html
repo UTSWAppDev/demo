@@ -6,6 +6,7 @@
     <title>
         How to Debug
     </title>
+</head>
 
 <body>
     <h1>Debugging a Calculator</h1>
@@ -45,7 +46,7 @@
         function inputsAreEmpty() {
             let num1 = getNumber1();
             let num2 = getNumber2()
-            if (num1 == '' || num2 == '') {
+            if (num1 === '' || num2 === '') {
                 return true;
             } else {
                 return true;
@@ -68,29 +69,29 @@
         }
 
         function getOperation() {
-            return inputs[2].value;
+            return document.querySelector('input[name="operation"]:checked').value;
         }
 
         function doMath(x, y, operation) {
             let result = "";
             switch (operation) {
                 case "+":
-                    result = add(num1, num2);
+                    result = add(x, y);
                     break;
                 case "-":
-                    result = subtract(num1, num2);
+                    result = subtract(x, y);
                     break;
                 case "*":
-                    result = subtract(num1, num2);
+                    result = subtract(x, y);
                     break;
                 case "/":
-                    result = divide(num2, num2);
+                    result = divide(x, y);
                     break;
                 default:
                     result = "No valid operation provided"
                     break;
             }
-            //
+            return result;
         }
 
         function add(x, y) {
@@ -109,13 +110,11 @@
             return x / y;
         }
 
-         //return document.querySelector('input[name="operation"]:checked').value;
+         
 
     </script>
 
 
 </body>
-</body>
-</head>
 
 </html>
