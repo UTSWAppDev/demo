@@ -102,8 +102,8 @@
       <div class="bodygroup">
          <form action="">
             <p>
-               <label for="txtFirst">First name:</label>
-               <input type="text" id="txtFirst" name="first" value="Test">
+               <label for="txt-first">First name:</label>
+               <input type="text" id="txt-first" name="first" value="Test">
             </p>
             <p>
                <label for="txtLast">Last name:</label>
@@ -132,7 +132,7 @@
       while (1) { x++;
                  x--;}
       function AddNameToTable() {
-         const firstName = document.getElementById("txtFirst").value;
+         const firstName = document.getElementById("txt-first").value;
          const lastName = document.getElementById("txtLast").value;
          const tblNames = document.getElementById("tblNames");
          const row = tblNames.insertRow();
