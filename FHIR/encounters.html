@@ -24,7 +24,10 @@
         patientId = "87a339d0-8cae-418e-89c7-8651e6aab3c6";
     }
 
-    const client = new FHIR.client("https://r4.smarthealthit.org");
+    // define the FHIR client
+  const client = new FHIR.client("https://r4.smarthealthit.org");
+  //const client = new FHIR.client("http://test.fhir.org/r4");
+  //const client = new FHIR.client("https://hapi.fhir.org/baseR4");
 
     // now query the FHIR server for the Encounter data
     client.request(`Encounter?patient=${patientId}`, { pageLimit: 0, flat: true }).then(function (encounterList) {
@@ -37,10 +40,10 @@
         // loop over each enounter and add it as a row to the table
         encounterList.forEach(function (encounter) {
             let row = encounterTable.insertRow();
-            let cellA = row.insertCell();
+            //let cellA = row.insertCell();
             let cellB = row.insertCell();
             let cellC = row.insertCell();
-            cellA.innerText = encounter.id;
+            //cellA.innerText = encounter.id;
             cellB.innerText = encounter.period.start;
             cellC.innerText = encounter.type[0].text;
         });

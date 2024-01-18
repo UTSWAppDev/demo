@@ -23,7 +23,10 @@
         import { w2form, query, w2ui, w2popup, w2alert } from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js'
         let searchParams = new URLSearchParams(window.location.search);
         let patientId = searchParams.get('patient');
+        // define the FHIR client
         const client = new FHIR.client("https://r4.smarthealthit.org");
+        //const client = new FHIR.client("http://test.fhir.org/r4");
+        //const client = new FHIR.client("https://hapi.fhir.org/baseR4");
 
         function savePatient(patient) {
             client.update(patient).then(event => console.log(event));

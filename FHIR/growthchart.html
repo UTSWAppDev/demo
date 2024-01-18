@@ -22,14 +22,16 @@
             patientId = "87a339d0-8cae-418e-89c7-8651e6aab3c6";
         }
 
-        //create the FHIR client
+        // define the FHIR client
         const client = new FHIR.client("https://r4.smarthealthit.org");
+        //const client = new FHIR.client("http://test.fhir.org/r4");
+        //const client = new FHIR.client("https://hapi.fhir.org/baseR4");
 
         // identify the canvas where we'll put the chart
         const growthChart = document.getElementById("growthChart");
 
         // query the FHIR server for the weight data
-        client.request(`Observation?patient=${patientId}&code=29463-7`, { pageLimit: 0, flat: true }).then(function (value) { BuildGrowthChart(value) } );
+        client.request(`Observation?patient=${patientId}&code=29463-7`, { pageLimit: 0, flat: true }).then(function (value) { BuildGrowthChart(value) });
 
         // take the JSON response and pull the data we care about (weight and time measured)
         function ParseFHIRBundle(bundle) {
@@ -45,8 +47,8 @@
             dates.sort((a, b) => new Date(a) - new Date(b)); // sort dates in chronological order
             const weights = [];
             for (const date of dates) {
-                weights.push(obj[date]); 
-            }       
+                weights.push(obj[date]);
+            }
             return weights;
         }
 

@@ -10,6 +10,7 @@
 <body>
 
   <h1>Patients</h1>
+  <h3>Demonstration of FHIR querying</h3>
   <div id="output">Loading...</div>
   <div id="action">
     <input id="btnGrowth" type="button" value="Growth Chart">
@@ -22,6 +23,8 @@
 
   // define the FHIR client
   const client = new FHIR.client("https://r4.smarthealthit.org");
+  //const client = new FHIR.client("http://test.fhir.org/r4");
+  //const client = new FHIR.client("https://hapi.fhir.org/baseR4");
   
   // define other global variables
   let iActive = 0;
@@ -55,16 +58,16 @@
         row.classList.add('selected');
       });
       // add the cells to the row
-      let cellA = row.insertCell();
+      //let cellA = row.insertCell();
       let cellB = row.insertCell();
       let cellC = row.insertCell();
-      cellA.innerText = patient.id;
+      //cellA.innerText = patient.gender;
       cellB.innerText = patient.name[0].family + ", " + patient.name[0].given[0];
       cellC.innerText = patient.birthDate;
       });
   }
   // query the FHIR server for list of all Patients
-  client.request("Patient", { pageLimit: 0, flat: true }).then(function(value) { CreatePatientTable(value) });
+  client.request("Patient", { pageLimit: 2, timeout: 10000, flat: true }).then(function(value) { CreatePatientTable(value) }).catch(function (error) { console.log(error) });
 
   // Add the edit and encounters buttons
   let btnGrowth = document.getElementById("btnGrowth");
