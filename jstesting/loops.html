@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title>Testing JavaScript Loops</title>     
+    </head>
+    <body>
+        <h1>Testing JavaScript Loops</h1>
+    
+        <script defer>
+            let team = ["Sam", "Alex", "Charlie", "John", "Mary"];
+
+            // for loop
+            for (let i = 0; i < team.length; i++) {
+                alert("For loop:\n" +
+                    "Item " + i + "\n" +
+                    team[i]);
+            }
+
+            // for of loop
+            for (let name of team) {
+                alert("For of loop:\n" +
+                    name);    // note that we don't need the index of the array
+            }
+
+            // while loop
+            let i = 0;
+            while (i < team.length) {
+                alert("While loop:\n" +
+                    "Item " + i + "\n" +
+                    team[i]);
+                i++;
+            }
+
+            
+             </script>
+    </body>
+</html>
