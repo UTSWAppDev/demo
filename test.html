@@ -103,17 +103,17 @@
          <form action="">
             <p>
                <label for="txtFirst">First name:</label>
-               <input type="text" id="txtFirst" name="first" value="Test">
+               <input type="text" id="txt-first" name="first" value="Test">
             </p>
             <p>
                <label for="txtLast">Last name:</label>
-               <input type="text" id="txtLast" name="last" value="McTest">
+               <input type="text" id="txt-last" name="last" value="McTest">
             </p>
-            <input type="button" id="btnSubmit" value="Submit" onclick="AddNameToTable()">
+            <input type="button" id="btn-submit" value="Submit" onclick="AddNameToTable()">
          </form>
       </div>
       <div class="bodygroup">
-         <table id="tblNames">
+         <table id="tbl-names">
             <tr>
                <th>First Name</th>
                <th>Last Name</th>
@@ -129,9 +129,9 @@
 
    <script>
       function AddNameToTable() {
-         const firstName = document.getElementById("txtFirst").value;
-         const lastName = document.getElementById("txtLast").value;
-         const tblNames = document.getElementById("tblNames");
+         const firstName = document.getElementById("txt-first").value;
+         const lastName = document.getElementById("txt-last").value;
+         const tblNames = document.getElementById("tbl-names");
          const row = tblNames.insertRow();
          row.insertCell().innerText = firstName;
          row.insertCell().innerText = lastName;
